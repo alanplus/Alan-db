@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">db</string>
+    <bool name="is_debug">false</bool>
+</resources>
