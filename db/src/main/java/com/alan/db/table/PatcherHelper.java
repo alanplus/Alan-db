@@ -1,9 +1,10 @@
 package com.alan.db.table;
 
-import android.database.sqlite.SQLiteDatabase;
 
 import com.alan.db.LogUtil;
 import com.alan.db.base.DbModel;
+
+import net.sqlcipher.database.SQLiteDatabase;
 
 import java.util.Map;
 
