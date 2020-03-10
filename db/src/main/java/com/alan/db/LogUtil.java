@@ -14,7 +14,8 @@ public class LogUtil {
     public static final String TAG = "alan_db";
 
     public static void error(Exception e) {
-        if (Resources.getSystem().getBoolean(R.bool.is_debug)) {
+        boolean isDebug = DatabaseConfig.iDatabaseConfig != null && DatabaseConfig.iDatabaseConfig.isDebug();
+        if (isDebug) {
             Log.e(TAG, Log.getStackTraceString(e));
         }
     }
