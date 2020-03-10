@@ -20,7 +20,8 @@ public class LogUtil {
     }
 
     public static void d(String text) {
-        if (Resources.getSystem().getBoolean(R.bool.is_debug) && !TextUtils.isEmpty(text)) {
+        boolean isDebug = DatabaseConfig.iDatabaseConfig != null && DatabaseConfig.iDatabaseConfig.isDebug();
+        if (isDebug && !TextUtils.isEmpty(text)) {
             Log.d(TAG, text);
         }
     }

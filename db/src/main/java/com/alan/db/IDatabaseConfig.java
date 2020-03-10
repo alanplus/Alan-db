@@ -46,4 +46,6 @@ public interface IDatabaseConfig {
 
     String getKey();
 
+    boolean isDebug();
+
 }
