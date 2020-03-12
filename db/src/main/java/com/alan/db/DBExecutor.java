@@ -38,6 +38,9 @@ public class DBExecutor {
      * @return
      */
     public static synchronized <T extends DbModel> boolean insert(T t) {
+        if(t==null){
+            return true;
+        }
         ContentValues contentValues = getContentValues(t);
         Table table = t.getTable();
         return getSQLiteDatabase().insert(table.getTableName(), null, contentValues) > 0;
@@ -52,6 +55,9 @@ public class DBExecutor {
      * @return
      */
     public static synchronized <T extends DbModel> boolean insert(List<T> list) {
+        if(null==list){
+            return true;
+        }
         SQLiteDatabase sqLiteDatabase = getSQLiteDatabase();
         sqLiteDatabase.beginTransaction();
         for (T t : list) {
@@ -72,6 +78,9 @@ public class DBExecutor {
      * @return
      */
     public static synchronized <T extends DbModel> boolean replace(T t) {
+        if(null==t){
+            return true;
+        }
         ContentValues contentValues = getContentValues(t);
         Table table = t.getTable();
         return getSQLiteDatabase().replace(table.getTableName(), null, contentValues) > 0;
@@ -84,6 +93,9 @@ public class DBExecutor {
      * @param <T>
      */
     public static synchronized <T extends DbModel> void replace(List<T> list) {
+        if(null==list){
+            return;
+        }
         SQLiteDatabase sqLiteDatabase = getSQLiteDatabase();
         sqLiteDatabase.beginTransaction();
         for (T t : list) {
@@ -101,6 +113,9 @@ public class DBExecutor {
      * @return
      */
     public static synchronized <T extends DbModel> boolean update(T t, String... columns) {
+        if(null==t){
+            return true;
+        }
         ContentValues contentValues = getContentValues(t);
         Table table = t.getTable();
         StringBuilder stringBuilder = new StringBuilder();
@@ -116,6 +131,9 @@ public class DBExecutor {
      * @return
      */
     public static synchronized <T extends DbModel> boolean delete(T t, String... columns) {
+        if(null==t){
+            return true;
+        }
         Table table = t.getTable();
         StringBuilder stringBuilder = new StringBuilder();
         String[] strings = whereArgs(t, stringBuilder, columns);
@@ -131,6 +149,9 @@ public class DBExecutor {
      * @return
      */
     public static synchronized <T extends DbModel> boolean delete(String[] columns, T... list) {
+        if(list==null){
+            return true;
+        }
         SQLiteDatabase sqLiteDatabase = getSQLiteDatabase();
         sqLiteDatabase.beginTransaction();
         for (T t : list) {
