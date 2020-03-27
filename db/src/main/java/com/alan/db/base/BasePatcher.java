@@ -10,8 +10,7 @@ import net.sqlcipher.database.SQLiteDatabase;
  * 时 间：2019-11-27
  * 简 述：<功能简述>
  */
-public abstract class BasePatcher<T extends DbModel> implements IPatcher {
-
+public abstract class BasePatcher implements IPatcher {
 
     /**
      * 添加列
@@ -20,7 +19,7 @@ public abstract class BasePatcher<T extends DbModel> implements IPatcher {
      * @param tClass
      * @param columns
      */
-    public void update(SQLiteDatabase database, Class<T> tClass, String[] columns) {
+    public <T extends DbModel> void update(SQLiteDatabase database, Class<T> tClass, String[] columns) {
         PatcherHelper.alertTableForAdd(columns, database, tClass);
     }
 
@@ -29,7 +28,7 @@ public abstract class BasePatcher<T extends DbModel> implements IPatcher {
      * @param database
      * @param tClass
      */
-    public void create(SQLiteDatabase database, Class<T> tClass) {
+    public <T extends DbModel> void create(SQLiteDatabase database, Class<T> tClass) {
         PatcherHelper.createTable(tClass, database);
 
     }
