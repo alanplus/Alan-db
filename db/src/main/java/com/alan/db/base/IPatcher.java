@@ -3,7 +3,7 @@ package com.alan.db.base;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
-public interface IPatcher {
+public interface IPatcher<T> {
     /**
      * 原有数据库版本 小于等于这个值都将被执行
      *
@@ -16,5 +16,5 @@ public interface IPatcher {
      *
      * @param database
      */
-    <T extends DbModel> void execute(SQLiteDatabase database, Class<T> tClass);
+    void execute(SQLiteDatabase database, Class<T> tClass);
 }
