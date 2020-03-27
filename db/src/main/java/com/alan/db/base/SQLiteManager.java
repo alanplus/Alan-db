@@ -107,7 +107,7 @@ public class SQLiteManager extends SQLiteOpenHelper {
                             int max = inst.getSupportMaxVersion();
                             if (oldVersion < max) {
                                 LogUtil.d("onUpgrade step execute");
-                                inst.execute(db, clazz);
+                                inst.execute(db);
                             }
                         } catch (Exception e) {
                             LogUtil.error(e);
