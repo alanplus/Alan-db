@@ -17,6 +17,7 @@ allprojects {
 ```
 dependencies {
     implementation 'com.github.alanplus:Alan-db:1.4'
+    implementation 'net.zetetic:android-database-sqlcipher:4.0.0@aar'
 }
 
 ```

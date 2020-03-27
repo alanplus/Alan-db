@@ -33,4 +33,11 @@ public class PatcherHelper {
         LogUtil.d(sql);
         sqLiteDatabase.execSQL(sql);
     }
+
+    public static <T extends DbModel> void createTable(Class<T> tClass, SQLiteDatabase sqLiteDatabase) {
+        Table table = TableFactory.getTable(tClass);
+        String sql = table.getCreateSqlStr();
+        LogUtil.d(sql);
+        sqLiteDatabase.execSQL(sql);
+    }
 }
