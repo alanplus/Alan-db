@@ -2,6 +2,7 @@ package com.alan.db;
 
 
 import android.content.ContentValues;
+import android.text.TextUtils;
 
 import com.alan.db.base.DbModel;
 import com.alan.db.base.SQLiteManager;
@@ -38,7 +39,7 @@ public class DBExecutor {
      * @return
      */
     public static synchronized <T extends DbModel> boolean insert(T t) {
-        if(t==null){
+        if (t == null) {
             return true;
         }
         ContentValues contentValues = getContentValues(t);
@@ -55,7 +56,7 @@ public class DBExecutor {
      * @return
      */
     public static synchronized <T extends DbModel> boolean insert(List<T> list) {
-        if(null==list){
+        if (null == list) {
             return true;
         }
         SQLiteDatabase sqLiteDatabase = getSQLiteDatabase();
@@ -78,7 +79,7 @@ public class DBExecutor {
      * @return
      */
     public static synchronized <T extends DbModel> boolean replace(T t) {
-        if(null==t){
+        if (null == t) {
             return true;
         }
         ContentValues contentValues = getContentValues(t);
@@ -93,7 +94,7 @@ public class DBExecutor {
      * @param <T>
      */
     public static synchronized <T extends DbModel> void replace(List<T> list) {
-        if(null==list){
+        if (null == list) {
             return;
         }
         SQLiteDatabase sqLiteDatabase = getSQLiteDatabase();
@@ -113,7 +114,7 @@ public class DBExecutor {
      * @return
      */
     public static synchronized <T extends DbModel> boolean update(T t, String... columns) {
-        if(null==t){
+        if (null == t) {
             return true;
         }
         ContentValues contentValues = getContentValues(t);
@@ -131,7 +132,7 @@ public class DBExecutor {
      * @return
      */
     public static synchronized <T extends DbModel> boolean delete(T t, String... columns) {
-        if(null==t){
+        if (null == t) {
             return true;
         }
         Table table = t.getTable();
@@ -149,7 +150,7 @@ public class DBExecutor {
      * @return
      */
     public static synchronized <T extends DbModel> boolean delete(String[] columns, T... list) {
-        if(list==null){
+        if (list == null) {
             return true;
         }
         SQLiteDatabase sqLiteDatabase = getSQLiteDatabase();
@@ -430,10 +431,11 @@ public class DBExecutor {
         Table table = t.getTable();
         Collection<Column> values = table.getColumns().values();
         for (Column column : values) {
-//            if (column.isAutoIncrement()) {
-//                continue;
-//            }
-            contentValues.put(column.getName(), getValue(t, column));
+            String value = getValue(t, column);
+            if (column.isAutoIncrement() && (TextUtils.isEmpty(value) || "0".equals(value))) {
+                continue;
+            }
+            contentValues.put(column.getName(), value);
         }
         return contentValues;
     }
