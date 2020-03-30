@@ -430,9 +430,9 @@ public class DBExecutor {
         Table table = t.getTable();
         Collection<Column> values = table.getColumns().values();
         for (Column column : values) {
-            if (column.isAutoIncrement()) {
-                continue;
-            }
+//            if (column.isAutoIncrement()) {
+//                continue;
+//            }
             contentValues.put(column.getName(), getValue(t, column));
         }
         return contentValues;
