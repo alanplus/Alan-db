@@ -456,6 +456,10 @@ public class DBExecutor {
         executor(sql, onSqlExecutorCallback, new Object[0]);
     }
 
+    public synchronized static void executorSQL(String sql) {
+        getSQLiteDatabase().execSQL(sql);
+    }
+
 //    public synchronized static <T> T executor(String sql, OnSqlCallback<T> onSqlExecutorCallback) {
 //        executor(sql, onSqlExecutorCallback, new Object[0]);
 //    }
