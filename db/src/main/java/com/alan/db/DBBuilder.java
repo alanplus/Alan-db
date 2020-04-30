@@ -112,6 +112,7 @@ public class DBBuilder<T extends DbModel> {
         StringBuilder stringBuilder = new StringBuilder();
         String[] params = DBExecutor.getQueryParams(stringBuilder, hashMap);
         DBExecutor.getSQLiteDatabase().delete(tableName, stringBuilder.toString(), params);
-
     }
+
+
 }

@@ -456,6 +456,35 @@ public class DBExecutor {
         executor(sql, onSqlExecutorCallback, new Object[0]);
     }
 
+    public synchronized static <T extends DbModel> T executor(String sql, final Class<T> clazz) {
+        final List<T> list = new ArrayList<>();
+        executor(sql, new OnSqlExecutorCallback() {
+            @Override
+            public void onSqlExecutorCallback(Cursor cursor) {
+                T t = getObjectByCursor(clazz, cursor);
+                if(t!=null){
+                    list.add(t);
+                }
+            }
+        }, new Object[0]);
+        return list.size() == 0 ? null : list.get(0);
+    }
+
+    public synchronized static <T extends DbModel> List<T> executorList(String sql, final Class<T> clazz) {
+        final List<T> list = new ArrayList<>();
+        executor(sql, new OnSqlExecutorCallback() {
+            @Override
+            public void onSqlExecutorCallback(Cursor cursor) {
+                T t = getObjectByCursor(clazz, cursor);
+                if(t!=null){
+                    list.add(t);
+                }
+            }
+        }, new Object[0]);
+        return list;
+    }
+
+
     public synchronized static void executorSQL(String sql) {
         getSQLiteDatabase().execSQL(sql);
     }
