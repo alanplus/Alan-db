@@ -3,11 +3,13 @@ package com.alan.db;
 
 import android.content.ContentValues;
 import android.text.TextUtils;
+import android.util.SparseArray;
 
 import com.alan.db.base.DbModel;
 import com.alan.db.base.SQLiteManager;
 import com.alan.db.converters.ColumnConverterFactory;
 import com.alan.db.converters.IColumnConverter;
+import com.alan.db.model.DBMap;
 import com.alan.db.reflect.ObjectFactory;
 import com.alan.db.table.Column;
 import com.alan.db.table.Table;
@@ -462,7 +464,7 @@ public class DBExecutor {
             @Override
             public void onSqlExecutorCallback(Cursor cursor) {
                 T t = getObjectByCursor(clazz, cursor);
-                if(t!=null){
+                if (t != null) {
                     list.add(t);
                 }
             }
@@ -476,7 +478,7 @@ public class DBExecutor {
             @Override
             public void onSqlExecutorCallback(Cursor cursor) {
                 T t = getObjectByCursor(clazz, cursor);
-                if(t!=null){
+                if (t != null) {
                     list.add(t);
                 }
             }
@@ -546,5 +548,18 @@ public class DBExecutor {
 
     public interface OnHandlerTransactionListener {
         void onHandlerTransactisonListener();
+    }
+
+    public List<DBMap> findList(String sql) {
+        Cursor cursor = getSQLiteDatabase().rawQuery(sql, new Object[]{});
+        List<DBMap> list = new ArrayList<>();
+        if (null == cursor) {
+            return list;
+        }
+        while (cursor.moveToNext()) {
+            DBMap map = new DBMap(cursor);
+            list.add(map);
+        }
+        return list;
     }
 }
