@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * @author Alan
@@ -560,6 +561,24 @@ public class DBExecutor {
             DBMap map = new DBMap(cursor);
             list.add(map);
         }
+        cursor.close();
         return list;
+    }
+
+    public DBMap find(String sql) {
+        Cursor cursor = getSQLiteDatabase().rawQuery(sql, new Object[]{});
+        if (null == cursor) {
+            return null;
+        }
+        try {
+            if (cursor.moveToFirst()) {
+                return new DBMap(cursor);
+            }
+        } catch (Exception e) {
+            LogUtil.error(e);
+        } finally {
+            cursor.close();
+        }
+        return null;
     }
 }

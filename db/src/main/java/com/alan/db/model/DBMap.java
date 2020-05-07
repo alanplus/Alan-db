@@ -123,4 +123,12 @@ public class DBMap {
         }
         return defaultValue;
     }
+
+    public void put(String key, Object o) {
+        map.put(key, new DBItem(5, o));
+    }
+
+    public void remove(String key) {
+        map.remove(key);
+    }
 }
