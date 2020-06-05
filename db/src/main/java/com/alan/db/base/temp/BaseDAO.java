@@ -23,7 +23,7 @@ public abstract class BaseDAO<T> {
     public static final String[] ALL_COLS = new String[]{"*"};
     protected Context mContext;
     protected String mTableName;
-    public List<Class<? extends IPatcher>> mPatcherList;
+    public List<Class<? extends IPatcher<T>>> mPatcherList;
 
     protected OnGetData<T> onGetData;
 
