@@ -91,6 +91,19 @@ public class SQLiteManager extends SQLiteOpenHelper {
         }
     }
 
+    public void updateTempTable(SQLiteDatabase db, int oldVersion, int newVersion) {
+        List<Class<? extends BaseDAO>> classes = mConfig.getTempTables(mContext);
+        for (Class<? extends BaseDAO> clazz : classes) {
+            try {
+                Constructor<? extends BaseDAO> con = clazz
+                        .getConstructor(Context.class);
+                BaseDAO table = con.newInstance(mContext);
+                table.onUpdate(db, oldVersion, newVersion);
+            } catch (Exception e) {
+            }
+        }
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         List<Class<? extends DbModel>> classes = mConfig.getTables(mContext);
@@ -118,6 +131,7 @@ public class SQLiteManager extends SQLiteOpenHelper {
                 LogUtil.error(e);
             }
         }
+        updateTempTable(db, oldVersion, newVersion);
     }
 
 

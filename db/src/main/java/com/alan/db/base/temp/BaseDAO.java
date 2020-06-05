@@ -23,7 +23,7 @@ public abstract class BaseDAO<T> {
     public static final String[] ALL_COLS = new String[]{"*"};
     protected Context mContext;
     protected String mTableName;
-    private List<Class<? extends IPatcher<T>>> mPatcherList;
+    public List<Class<? extends IPatcher>> mPatcherList;
 
     protected OnGetData<T> onGetData;
 
@@ -74,7 +74,6 @@ public abstract class BaseDAO<T> {
     }
 
 
-
     /**
      * 根据游标获取列表
      *
@@ -108,6 +107,23 @@ public abstract class BaseDAO<T> {
         } finally {
             cursor.close();
             onGetData = null;
+        }
+    }
+
+    public final void onUpdate(SQLiteDatabase database, int oldVersion, int newVersion) {
+        if (this.mPatcherList != null) {
+            for (Class<? extends IPatcher<T>> patcherClazz : mPatcherList) {
+                IPatcher<T> inst;
+                try {
+                    inst = patcherClazz.newInstance();
+                    int max = inst.getSupportMaxVersion();
+                    if (oldVersion <= max) {
+                        inst.execute(this, database, getContext());
+                    }
+                } catch (Exception e) {
+
+                }
+            }
         }
     }
 
@@ -492,7 +508,7 @@ public abstract class BaseDAO<T> {
      */
     public BaseDAO<T> registerPatcher(Class<? extends IPatcher<T>> patcherClazz) {
         if (mPatcherList == null) {
-            mPatcherList = new ArrayList<Class<? extends IPatcher<T>>>();
+            mPatcherList = new ArrayList<>();
         }
         mPatcherList.add(patcherClazz);
         return this;
@@ -577,14 +593,15 @@ public abstract class BaseDAO<T> {
         getDatabase().replace(getTableName(), null, values);
     }
 
-    protected String format(String format, Object...args){
-       return String.format(new Locale(""), format, args);
+    protected String format(String format, Object... args) {
+        return String.format(new Locale(""), format, args);
     }
+
     public static final String COL_TYPE_AUTO_ID = "INTEGER PRIMARY KEY";
     public static final String COL_TYPE_FLOAT = "FLOAT";
     public static final String COL_TYPE_TEXT = "TEXT";
     public static final String COL_TYPE_INT = "INT";
-    public static final  String COL_TYPE_LONG = "LONG";
+    public static final String COL_TYPE_LONG = "LONG";
 
     public static final String COL_TYPE_PRIMARY_KEY = "PRIMARY KEY";
     public static final String COL_TYPE_NOT_NULL = " NOT NULL ";
