@@ -38,13 +38,16 @@ public class DBUtils {
         }
     }
 
-
     public static void copyDataBase(@NonNull Context context, String name) throws Exception {
+        copyDataBase(context, name, name);
+    }
+
+    public static void copyDataBase(@NonNull Context context, String name, String destName) throws Exception {
         int n = 1;
         Exception exception = null;
         while (n < 4) {
             try {
-                copyDataBase2(context, name);
+                copyDataBase2(context, name, destName);
             } catch (Exception e) {
                 n++;
                 exception = e;
@@ -58,11 +61,11 @@ public class DBUtils {
         }
     }
 
-    private static void copyDataBase2(@NonNull Context context, String name) throws Exception {
+    private static void copyDataBase2(@NonNull Context context, String name, String destName) throws Exception {
         // 打开 文件
         InputStream myInput = context.getAssets().open(name);
         // 获取目标文件
-        File file = context.getDatabasePath(name);
+        File file = context.getDatabasePath(destName);
         //获取目标文件的文件夹
         File parentFile = file.getParentFile();
         // 创建文件夹
@@ -114,15 +117,15 @@ public class DBUtils {
         }
     }
 
-    public static boolean checkSqlCipherDataBase(Context context, String name,String password){
+    public static boolean checkSqlCipherDataBase(Context context, String name, String password) {
         SQLiteDatabase sqLiteDatabase = null;
         try {
             File file = context.getDatabasePath(name);
             sqLiteDatabase = SQLiteDatabase.openDatabase(file.getAbsolutePath(), password, null, 0);
             return sqLiteDatabase.isOpen();
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
-        }finally {
+        } finally {
             if (null != sqLiteDatabase) {
                 sqLiteDatabase.close();
             }

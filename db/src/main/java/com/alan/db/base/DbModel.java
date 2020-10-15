@@ -1,5 +1,6 @@
 package com.alan.db.base;
 
+import com.alan.db.DBExecutor;
 import com.alan.db.table.Table;
 import com.alan.db.table.TableFactory;
 
@@ -16,5 +17,8 @@ public class DbModel {
         return TableFactory.getTable(this.getClass());
     }
 
+    public void update() {
+        DBExecutor.replace(this);
+    }
 
 }
