@@ -2,6 +2,8 @@ package com.alan.db;
 
 import android.content.Context;
 
+import net.sqlcipher.database.SQLiteDatabase;
+
 /**
  * @author Alan
  * 时 间：2019-11-26
@@ -14,8 +16,9 @@ public class DatabaseConfig {
     public static IDatabaseConfig iDatabaseConfig;
 
     public static void register(Context context, IDatabaseConfig iDatabaseConfig) {
-        DatabaseConfig.context = context;
+        DatabaseConfig.context = context.getApplicationContext();
         DatabaseConfig.iDatabaseConfig = iDatabaseConfig;
+        SQLiteDatabase.loadLibs(context.getApplicationContext());
     }
 
 }
