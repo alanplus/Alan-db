@@ -24,6 +24,11 @@ public enum DBType {
 		public Object getValueFromCursor(Cursor cursor, int index) {
 			return cursor.getInt(index);
 		}
+
+		@Override
+		public Object getValueFromCursor(android.database.Cursor cursor, int index) {
+			return cursor.getInt(index);
+		}
 	},
 	/**
 	 * 字符串String类型
@@ -37,6 +42,11 @@ public enum DBType {
 
 		@Override
 		public Object getValueFromCursor(Cursor cursor, int index) {
+			return cursor.getString(index);
+		}
+
+		@Override
+		public Object getValueFromCursor(android.database.Cursor cursor, int index) {
 			return cursor.getString(index);
 		}
 	},
@@ -54,6 +64,11 @@ public enum DBType {
 		public Object getValueFromCursor(Cursor cursor, int index) {
 			return cursor.getLong(index);
 		}
+
+		@Override
+		public Object getValueFromCursor(android.database.Cursor cursor, int index) {
+			return cursor.getLong(index);
+		}
 	},
 	/**
 	 * double等类型的存储
@@ -67,6 +82,11 @@ public enum DBType {
 
 		@Override
 		public Object getValueFromCursor(Cursor cursor, int index) {
+			return cursor.getDouble(index);
+		}
+
+		@Override
+		public Object getValueFromCursor(android.database.Cursor cursor, int index) {
 			return cursor.getDouble(index);
 		}
 	},
@@ -84,6 +104,11 @@ public enum DBType {
 		public Object getValueFromCursor(Cursor cursor, int index) {
 			return cursor.getBlob(index);
 		}
+
+		@Override
+		public Object getValueFromCursor(android.database.Cursor cursor, int index) {
+			return cursor.getBlob(index);
+		}
 	},
 
 	NULL {
@@ -95,6 +120,11 @@ public enum DBType {
 
 		@Override
 		public Object getValueFromCursor(Cursor cursor, int index) {
+			return null;
+		}
+
+		@Override
+		public Object getValueFromCursor(android.database.Cursor cursor, int index) {
 			return null;
 		}
 	};
@@ -116,5 +146,6 @@ public enum DBType {
 	 * @return 游标里面的数据
 	 */
 	public abstract Object getValueFromCursor(Cursor cursor, int index);
+	public abstract Object getValueFromCursor(android.database.Cursor cursor, int index);
 
 }
