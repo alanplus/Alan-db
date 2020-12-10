@@ -4,7 +4,7 @@ package com.alan.db.table;
 import com.alan.db.LogUtil;
 import com.alan.db.base.DbModel;
 
-import net.sqlcipher.database.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.Map;
 

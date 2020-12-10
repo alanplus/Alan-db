@@ -5,7 +5,7 @@ import android.content.Context;
 import com.alan.db.base.DbModel;
 import com.alan.db.base.temp.BaseDAO;
 
-import net.sqlcipher.database.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@ package com.alan.db.base.temp;
 
 import android.content.Context;
 
-import net.sqlcipher.database.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabase;
 
 public interface IPatcher<T> {
     /**

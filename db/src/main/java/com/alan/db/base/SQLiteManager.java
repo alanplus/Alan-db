@@ -1,6 +1,8 @@
 package com.alan.db.base;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 import com.alan.db.IDatabaseConfig;
 import com.alan.db.LogUtil;
@@ -8,9 +10,6 @@ import com.alan.db.annotations.Patcher;
 import com.alan.db.base.temp.BaseDAO;
 import com.alan.db.table.Table;
 import com.alan.db.table.TableFactory;
-
-import net.sqlcipher.database.SQLiteDatabase;
-import net.sqlcipher.database.SQLiteOpenHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +41,7 @@ public class SQLiteManager extends SQLiteOpenHelper {
                 instance = new SQLiteManager(context, config.getDatabaseName(),
                         config.getDatabaseVersion());
             }
-            db = instance.getWritableDatabase(config.getKey());
+            db = instance.getWritableDatabase();
 
             config.attatch(db);
 //
@@ -143,29 +142,29 @@ public class SQLiteManager extends SQLiteOpenHelper {
         }
     }
 
-    public static void encryption(Context context, File file) {
-        if (mConfig == null) {
-            return;
-        }
-        try {
-            File tempFile = File.createTempFile("sqlcipherutils", "tmp", context.getCacheDir());
-            SQLiteDatabase db = SQLiteDatabase.openDatabase(file.getAbsolutePath(), "", null, SQLiteDatabase.OPEN_READWRITE);
-            db.rawExecSQL(String.format("ATTACH DATABASE '%s' AS encrypted KEY '%s';", tempFile.getAbsolutePath(), mConfig.getKey()));
-            db.rawExecSQL("SELECT sqlcipher_export('encrypted')");
-            db.rawExecSQL("DETACH DATABASE encrypted;");
-            int version = db.getVersion();
-            db.close();
-
-            db = SQLiteDatabase.openDatabase(tempFile.getAbsolutePath(), mConfig.getKey(), null, SQLiteDatabase.OPEN_READWRITE);
-            db.setVersion(version);
-            db.close();
-
-            file.delete();
-            tempFile.renameTo(file);
-        } catch (IOException e) {
-            LogUtil.error(e);
-        }
-    }
+//    public static void encryption(Context context, File file) {
+//        if (mConfig == null) {
+//            return;
+//        }
+//        try {
+//            File tempFile = File.createTempFile("sqlcipherutils", "tmp", context.getCacheDir());
+//            SQLiteDatabase db = SQLiteDatabase.openDatabase(file.getAbsolutePath(), "", null, SQLiteDatabase.OPEN_READWRITE);
+//            db.rawExecSQL(String.format("ATTACH DATABASE '%s' AS encrypted KEY '%s';", tempFile.getAbsolutePath(), mConfig.getKey()));
+//            db.rawExecSQL("SELECT sqlcipher_export('encrypted')");
+//            db.rawExecSQL("DETACH DATABASE encrypted;");
+//            int version = db.getVersion();
+//            db.close();
+//
+//            db = SQLiteDatabase.openDatabase(tempFile.getAbsolutePath(), mConfig.getKey(), null, SQLiteDatabase.OPEN_READWRITE);
+//            db.setVersion(version);
+//            db.close();
+//
+//            file.delete();
+//            tempFile.renameTo(file);
+//        } catch (IOException e) {
+//            LogUtil.error(e);
+//        }
+//    }
 
     public static void attach(File file, SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("attach DATABASE '" + file.getAbsolutePath() + "' AS 'c' KEY '" + mConfig.getKey() + "'");

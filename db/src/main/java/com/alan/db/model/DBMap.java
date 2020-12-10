@@ -2,7 +2,7 @@ package com.alan.db.model;
 
 import com.alan.db.LogUtil;
 
-import net.sqlcipher.Cursor;
+import android.database.Cursor;
 
 import java.util.HashMap;
 

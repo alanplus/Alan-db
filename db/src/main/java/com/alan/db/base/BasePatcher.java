@@ -3,7 +3,7 @@ package com.alan.db.base;
 
 import com.alan.db.table.PatcherHelper;
 
-import net.sqlcipher.database.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabase;
 
 /**
  * @author Alan

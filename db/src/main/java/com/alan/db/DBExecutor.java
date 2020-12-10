@@ -15,8 +15,8 @@ import com.alan.db.table.Column;
 import com.alan.db.table.Table;
 import com.alan.db.table.TableFactory;
 
-import net.sqlcipher.Cursor;
-import net.sqlcipher.database.SQLiteDatabase;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -552,7 +552,7 @@ public class DBExecutor {
     }
 
     public List<DBMap> findList(String sql) {
-        Cursor cursor = getSQLiteDatabase().rawQuery(sql, new Object[]{});
+        Cursor cursor = getSQLiteDatabase().rawQuery(sql, null);
         List<DBMap> list = new ArrayList<>();
         if (null == cursor) {
             return list;
@@ -566,7 +566,7 @@ public class DBExecutor {
     }
 
     public DBMap find(String sql) {
-        Cursor cursor = getSQLiteDatabase().rawQuery(sql, new Object[]{});
+        Cursor cursor = getSQLiteDatabase().rawQuery(sql, null);
         if (null == cursor) {
             return null;
         }
